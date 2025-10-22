@@ -71,6 +71,20 @@ body {
   font-weight: 500;
 }
 
+/* Logout Button Styling */
+.logout-btn {
+  background: none !important;
+  border: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+}
+
+.logout-btn:hover {
+  color: #dc3545 !important;
+  background-color: #f8f9fa !important;
+}
+
 /* Main Content */
 .main-content {
   max-width: 1200px;
@@ -236,6 +250,61 @@ body {
   margin: 0 0.5rem;
 }
 
+/* Logout Button Styling */
+.logout-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #6c757d;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.logout-btn:hover {
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+/* Form styling for button_to logout */
+form[action*="sign_out"] {
+  display: inline;
+  margin: 0;
+}
+
+form[action*="sign_out"] input[type="submit"] {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #6c757d;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+form[action*="sign_out"] input[type="submit"]:hover {
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+/* Button styling for home page logout */
+.actions form[action*="sign_out"] input[type="submit"] {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.actions form[action*="sign_out"] input[type="submit"]:hover {
+  background-color: #545b62;
+  color: #fff;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-container {
@@ -255,6 +324,15 @@ body {
   
   .actions .btn {
     display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  .actions form[action*="sign_out"] {
+    width: 100%;
+  }
+  
+  .actions form[action*="sign_out"] input[type="submit"] {
     width: 100%;
     margin: 0.5rem 0;
   }
