@@ -1,15 +1,17 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
  *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
+ *= require_tree .
+ *= require_self
  *
- * Consider organizing styles into separate files for maintainability.
+ * Individual CSS files organized by view:
+ * - base.css: Global styles, navigation, and utilities
+ * - home.css: Home page and dashboard styles
+ * - profile.css: Profile and settings page styles  
+ * - auth.css: Login, signup, and authentication page styles
  */
 
-/* Reset and Base Styles */
+/* Global Base Styles */
 * {
   margin: 0;
   padding: 0;

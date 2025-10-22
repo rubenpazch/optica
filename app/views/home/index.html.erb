@@ -1,24 +1,68 @@
-<div class="container">
-  <h1>Welcome to Your Application</h1>
+<div class="home-dashboard">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Welcome to Optica</h1>
+    <p class="dashboard-subtitle">Your comprehensive optical management system</p>
+  </div>
   
-  <% if user_signed_in? %>
-    <div class="user-info">
-      <p>Hello, <%= current_user.email %>!</p>
-      <p>You are successfully logged in.</p>
-      
-      <div class="actions">
-        <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-primary" %>
-        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-secondary" %>
-      </div>
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-icon">📈</div>
+      <h2 class="stat-number">150</h2>
+      <p class="stat-label">Total Patients</p>
     </div>
-  <% else %>
-    <div class="welcome-message">
-      <p>Please log in to access your account.</p>
-      
-      <div class="actions">
-        <%= link_to "Login", new_user_session_path, class: "btn btn-primary" %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-secondary" %>
-      </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">👓</div>
+      <h2 class="stat-number">45</h2>
+      <p class="stat-label">Frames in Stock</p>
     </div>
-  <% end %>
+    
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <h2 class="stat-number">12</h2>
+      <p class="stat-label">Today's Appointments</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <h2 class="stat-number">$2,450</h2>
+      <p class="stat-label">Monthly Revenue</p>
+    </div>
+  </div>
+  
+  <div class="dashboard-actions">
+    <h2 class="actions-title">Quick Actions</h2>
+    
+    <div class="action-grid">
+      <%= link_to "#", class: "action-card" do %>
+        <div class="action-icon">👤</div>
+        <h3 class="action-title">Add Patient</h3>
+      <% end %>
+      
+      <%= link_to "#", class: "action-card" do %>
+        <div class="action-icon">📋</div>
+        <h3 class="action-title">New Appointment</h3>
+      <% end %>
+      
+      <%= link_to "#", class: "action-card" do %>
+        <div class="action-icon">👓</div>
+        <h3 class="action-title">Manage Inventory</h3>
+      <% end %>
+      
+      <%= link_to "#", class: "action-card" do %>
+        <div class="action-icon">📊</div>
+        <h3 class="action-title">View Reports</h3>
+      <% end %>
+      
+      <%= link_to edit_user_registration_path, class: "action-card" do %>
+        <div class="action-icon">⚙️</div>
+        <h3 class="action-title">Account Settings</h3>
+      <% end %>
+      
+      <%= link_to "#", class: "action-card" do %>
+        <div class="action-icon">💬</div>
+        <h3 class="action-title">Support</h3>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -24,37 +24,76 @@
   </head>
 
   <body>
-    <nav class="navbar">
-      <div class="nav-container">
-        <%= link_to "Optica", root_path, class: "nav-brand" %>
-        
-        <div class="nav-links">
-          <% if user_signed_in? %>
+    <% if user_signed_in? %>
+      <!-- Authenticated Layout with Sidebar -->
+      <nav class="navbar">
+        <div class="nav-container">
+          <%= link_to "Optica", root_path, class: "nav-brand" %>
+          
+          <div class="nav-links">
             <span class="nav-user">Hello, <%= current_user.email %></span>
-            <%= link_to "Profile", edit_user_registration_path, class: "nav-link" %>
             <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link logout-btn" %>
-          <% else %>
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+          </div>
+        </div>
+      </nav>
+
+      <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">Dashboard</h3>
+            <p class="sidebar-subtitle">Welcome back!</p>
+          </div>
+          
+          <nav class="sidebar-nav">
+            <%= link_to root_path, class: "sidebar-nav-link #{'active' if current_page?(root_path)}" do %>
+              <span class="sidebar-nav-icon">🏠</span>
+              <span>Home</span>
+            <% end %>
+            
+            <%= link_to edit_user_registration_path, class: "sidebar-nav-link #{'active' if current_page?(edit_user_registration_path)}" do %>
+              <span class="sidebar-nav-icon">👤</span>
+              <span>Profile</span>
+            <% end %>
+            
+            <%= link_to "#", class: "sidebar-nav-link" do %>
+              <span class="sidebar-nav-icon">📊</span>
+              <span>Analytics</span>
+            <% end %>
+            
+            <%= link_to "#", class: "sidebar-nav-link" do %>
+              <span class="sidebar-nav-icon">⚙️</span>
+              <span>Settings</span>
+            <% end %>
+            
+            <%= link_to "#", class: "sidebar-nav-link" do %>
+              <span class="sidebar-nav-icon">📞</span>
+              <span>Support</span>
+            <% end %>
+          </nav>
+        </aside>
+
+        <main class="main-content-with-sidebar">
+          <% if notice %>
+            <div class="alert alert-success">
+              <%= notice %>
+            </div>
           <% end %>
-        </div>
+
+          <% if alert %>
+            <div class="alert alert-danger">
+              <%= alert %>
+            </div>
+          <% end %>
+
+          <%= yield %>
+        </main>
       </div>
-    </nav>
-
-    <main class="main-content">
-      <% if notice %>
-        <div class="alert alert-success">
-          <%= notice %>
-        </div>
-      <% end %>
-
-      <% if alert %>
-        <div class="alert alert-danger">
-          <%= alert %>
-        </div>
-      <% end %>
-
-      <%= yield %>
-    </main>
+    <% else %>
+      <!-- Authentication Layout (no sidebar) -->
+      <div class="auth-page">
+        <%= yield %>
+      </div>
+    <% end %>
   </body>
 </html>

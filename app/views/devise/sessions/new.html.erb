@@ -1,6 +1,9 @@
 <div class="login-container">
   <div class="login-form">
-    <h2>Log in to Your Account</h2>
+    <div class="auth-brand">
+      <h1>Optica</h1>
+    </div>
+    <h2>Welcome Back</h2>
     
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form-content" }) do |f| %>
       <div class="form-group">
