@@ -80,10 +80,8 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # Allow requests from Heroku app domain
-  config.hosts = [
-    ENV.fetch("HEROKU_APP_NAME", "localhost") + ".herokuapp.com"
-  ] if ENV["HEROKU_APP_NAME"].present?
+  # Allow requests from Heroku app domain - more permissive for staging environment
+  config.hosts = nil  # Allow all hosts for staging environment
   
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
