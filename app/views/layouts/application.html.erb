@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Optica" %></title>
+    <title><%= content_for(:title) || "Óptica - Sistema de Gestión" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Optica">
@@ -28,11 +28,11 @@
       <!-- Authenticated Layout with Sidebar -->
       <nav class="navbar">
         <div class="nav-container">
-          <%= link_to "Optica", root_path, class: "nav-brand" %>
+          <%= link_to "Óptica", root_path, class: "nav-brand" %>
           
           <div class="nav-links">
-            <span class="nav-user">Hello, <%= current_user.email %></span>
-            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link logout-btn" %>
+            <span class="nav-user">Hola, <%= current_user.email %></span>
+            <%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: "nav-link logout-btn" %>
           </div>
         </div>
       </nav>
@@ -41,34 +41,34 @@
         <!-- Sidebar -->
         <aside class="sidebar">
           <div class="sidebar-header">
-            <h3 class="sidebar-title">Dashboard</h3>
-            <p class="sidebar-subtitle">Welcome back!</p>
+            <h3 class="sidebar-title">Panel de Control</h3>
+            <p class="sidebar-subtitle">¡Bienvenido de nuevo!</p>
           </div>
           
           <nav class="sidebar-nav">
             <%= link_to root_path, class: "sidebar-nav-link #{'active' if current_page?(root_path)}" do %>
               <span class="sidebar-nav-icon">🏠</span>
-              <span>Home</span>
+              <span>Inicio</span>
             <% end %>
             
             <%= link_to edit_user_registration_path, class: "sidebar-nav-link #{'active' if current_page?(edit_user_registration_path)}" do %>
               <span class="sidebar-nav-icon">👤</span>
-              <span>Profile</span>
+              <span>Perfil</span>
             <% end %>
             
             <%= link_to "#", class: "sidebar-nav-link" do %>
               <span class="sidebar-nav-icon">📊</span>
-              <span>Analytics</span>
+              <span>Estadísticas</span>
             <% end %>
             
             <%= link_to "#", class: "sidebar-nav-link" do %>
               <span class="sidebar-nav-icon">⚙️</span>
-              <span>Settings</span>
+              <span>Configuración</span>
             <% end %>
             
             <%= link_to "#", class: "sidebar-nav-link" do %>
               <span class="sidebar-nav-icon">📞</span>
-              <span>Support</span>
+              <span>Soporte</span>
             <% end %>
           </nav>
         </aside>

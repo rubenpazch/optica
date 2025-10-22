@@ -1,66 +1,66 @@
 <div class="profile-container">
   <div class="profile-form">
     <div class="profile-header">
-      <h2>Edit Profile</h2>
-      <p class="profile-subtitle">Update your account information</p>
+      <h2>Editar Perfil</h2>
+      <p class="profile-subtitle">Actualiza la información de tu cuenta</p>
     </div>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "profile-form-content" }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="form-section">
-        <h3>Account Information</h3>
+        <h3>Información de la Cuenta</h3>
         
         <div class="form-group">
-          <%= f.label :email, "Email Address", class: "form-label" %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+          <%= f.label :email, "Correo Electrónico", class: "form-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Ingresa tu correo electrónico" %>
         </div>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <div class="alert alert-info">
-            <strong>Pending confirmation:</strong> We're waiting for you to confirm <%= resource.unconfirmed_email %>
+            <strong>Confirmación pendiente:</strong> Estamos esperando que confirmes <%= resource.unconfirmed_email %>
           </div>
         <% end %>
       </div>
 
       <div class="form-section">
-        <h3>Change Password</h3>
-        <p class="form-section-subtitle">Leave blank if you don't want to change your password</p>
+        <h3>Cambiar Contraseña</h3>
+        <p class="form-section-subtitle">Deja en blanco si no quieres cambiar tu contraseña</p>
         
         <div class="form-group">
-          <%= f.label :password, "New Password", class: "form-label" %>
-          <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter new password" %>
+          <%= f.label :password, "Nueva Contraseña", class: "form-label" %>
+          <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Ingresa nueva contraseña" %>
           <% if @minimum_password_length %>
-            <small class="form-text">Minimum <%= @minimum_password_length %> characters required</small>
+            <small class="form-text">Mínimo <%= @minimum_password_length %> caracteres requeridos</small>
           <% end %>
         </div>
 
         <div class="form-group">
-          <%= f.label :password_confirmation, "Confirm New Password", class: "form-label" %>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm new password" %>
+          <%= f.label :password_confirmation, "Confirmar Nueva Contraseña", class: "form-label" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirma nueva contraseña" %>
         </div>
 
         <div class="form-group">
-          <%= f.label :current_password, "Current Password", class: "form-label" %>
-          <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", placeholder: "Enter current password" %>
-          <small class="form-text">We need your current password to confirm changes</small>
+          <%= f.label :current_password, "Contraseña Actual", class: "form-label" %>
+          <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", placeholder: "Ingresa contraseña actual" %>
+          <small class="form-text">Necesitamos tu contraseña actual para confirmar los cambios</small>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Update Profile", class: "btn btn-primary btn-block" %>
+        <%= f.submit "Actualizar Perfil", class: "btn btn-primary btn-block" %>
       </div>
     <% end %>
 
     <div class="danger-zone">
-      <h3>Danger Zone</h3>
-      <p>Once you delete your account, there is no going back. Please be certain.</p>
+      <h3>Zona de Peligro</h3>
+      <p>Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate.</p>
       
       <div class="danger-actions">
-        <%= button_to "Delete Account", registration_path(resource_name), 
+        <%= button_to "Eliminar Cuenta", registration_path(resource_name), 
             data: { 
-              confirm: "Are you sure you want to delete your account? This action cannot be undone.", 
-              turbo_confirm: "Are you sure you want to delete your account? This action cannot be undone." 
+              confirm: "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.", 
+              turbo_confirm: "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer." 
             }, 
             method: :delete, 
             class: "btn btn-danger" %>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="profile-footer">
-      <%= link_to "← Back to Dashboard", root_path, class: "btn btn-secondary" %>
+      <%= link_to "← Volver al Panel", root_path, class: "btn btn-secondary" %>
     </div>
   </div>
 </div>

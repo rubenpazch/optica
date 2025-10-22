@@ -1,0 +1,69 @@
+# Archivo de localización en español para Rails
+# Los archivos en el directorio config/locales se usan para internacionalización
+# y son cargados automáticamente por Rails.
+
+es:
+  hello: "Hola mundo"
+  
+  # Mensajes generales de la aplicación
+  application:
+    name: "Óptica"
+    welcome: "Bienvenido a Óptica"
+    dashboard: "Panel de Control"
+    
+  # Navegación
+  navigation:
+    home: "Inicio"
+    profile: "Perfil"
+    analytics: "Estadísticas"
+    settings: "Configuración"
+    support: "Soporte"
+    logout: "Cerrar Sesión"
+    
+  # Dashboard
+  dashboard:
+    welcome_back: "¡Bienvenido de nuevo!"
+    quick_actions: "Acciones Rápidas"
+    statistics: "Estadísticas"
+    
+  # Estadísticas
+  stats:
+    total_patients: "Total de Pacientes"
+    frames_in_stock: "Monturas en Stock"
+    todays_appointments: "Citas de Hoy"
+    monthly_revenue: "Ingresos Mensuales"
+    
+  # Acciones
+  actions:
+    add_patient: "Agregar Paciente"
+    new_appointment: "Nueva Cita"
+    manage_inventory: "Gestionar Inventario"
+    view_reports: "Ver Reportes"
+    account_settings: "Configuración de Cuenta"
+    support: "Soporte"
+    
+  # Formularios
+  forms:
+    email: "Correo Electrónico"
+    password: "Contraseña"
+    password_confirmation: "Confirmar Contraseña"
+    current_password: "Contraseña Actual"
+    new_password: "Nueva Contraseña"
+    remember_me: "Recordarme"
+    
+  # Botones
+  buttons:
+    login: "Iniciar Sesión"
+    logout: "Cerrar Sesión"
+    register: "Registrarse"
+    create_account: "Crear Cuenta"
+    update_profile: "Actualizar Perfil"
+    delete_account: "Eliminar Cuenta"
+    back_to_dashboard: "Volver al Panel"
+    
+  # Mensajes
+  messages:
+    login_success: "Has iniciado sesión exitosamente."
+    logout_success: "Has cerrado sesión exitosamente."
+    profile_updated: "Tu perfil ha sido actualizado exitosamente."
+    account_deleted: "Tu cuenta ha sido eliminada exitosamente."
