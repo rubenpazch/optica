@@ -91,7 +91,4 @@ Rails.application.configure do
 
   # Staging-specific: Show detailed error pages for debugging
   config.consider_all_requests_local = ENV.fetch("SHOW_ERRORS", "false") == "true"
-  
-  # Staging-specific: Allow web console for debugging
-  config.web_console.permissions = ENV["STAGING_IP"]&.split(",") if ENV["STAGING_IP"].present?
 end

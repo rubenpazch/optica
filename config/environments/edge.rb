@@ -88,9 +88,6 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  # Edge-specific: Enable web console for debugging
-  config.web_console.permissions = '0.0.0.0/0' if ENV["RAILS_ENV"] == "edge"
-
   # Edge-specific: More permissive CORS for testing
   # config.force_ssl = false if ENV["DISABLE_SSL"] == "true"
 end
