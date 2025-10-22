@@ -38,7 +38,8 @@ Rails.application.configure do
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!).
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  # Staging can have more verbose logging for debugging
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
 
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
@@ -87,4 +88,10 @@ Rails.application.configure do
   
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Staging-specific: Show detailed error pages for debugging
+  config.consider_all_requests_local = ENV.fetch("SHOW_ERRORS", "false") == "true"
+  
+  # Staging-specific: Allow web console for debugging
+  config.web_console.permissions = ENV["STAGING_IP"]&.split(",") if ENV["STAGING_IP"].present?
 end

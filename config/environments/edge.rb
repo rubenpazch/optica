@@ -9,8 +9,8 @@ Rails.application.configure do
   # Eager load code on boot for better performance and memory savings (ignored by Rake tasks).
   config.eager_load = true
 
-  # Full error reports are disabled.
-  config.consider_all_requests_local = false
+  # Full error reports are enabled for edge testing.
+  config.consider_all_requests_local = true
 
   # Turn on fragment caching in view templates.
   config.action_controller.perform_caching = true
@@ -38,13 +38,14 @@ Rails.application.configure do
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!).
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  # Edge environment uses debug level for maximum visibility
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
 
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
 
-  # Don't log any deprecations.
-  config.active_support.report_deprecations = false
+  # Log deprecations for edge testing
+  config.active_support.report_deprecations = true
 
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :solid_cache_store
@@ -53,9 +54,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # Raise email delivery errors for edge testing
+  config.action_mailer.raise_delivery_errors = true
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: ENV.fetch("HEROKU_APP_NAME", "localhost") + ".herokuapp.com" }
@@ -76,8 +76,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+  # Show more attributes for inspections in edge.
+  config.active_record.attributes_for_inspect = :all
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # Allow requests from Heroku app domain
@@ -87,4 +87,10 @@ Rails.application.configure do
   
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Edge-specific: Enable web console for debugging
+  config.web_console.permissions = '0.0.0.0/0' if ENV["RAILS_ENV"] == "edge"
+
+  # Edge-specific: More permissive CORS for testing
+  # config.force_ssl = false if ENV["DISABLE_SSL"] == "true"
 end

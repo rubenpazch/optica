@@ -1,0 +1,60 @@
+{
+  "name": "Optica",
+  "description": "A Rails application for optical management",
+  "repository": "https://github.com/yourusername/optica",
+  "logo": "",
+  "keywords": ["rails", "ruby", "postgresql", "optics"],
+  "image": "heroku/ruby",
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql:mini"
+    }
+  ],
+  "env": {
+    "RAILS_MASTER_KEY": {
+      "description": "Rails master key for encrypted credentials",
+      "required": true
+    },
+    "RAILS_ENV": {
+      "description": "Rails environment (production, staging, edge)",
+      "value": "staging"
+    },
+    "RACK_ENV": {
+      "description": "Rack environment (production, staging, edge)",
+      "value": "staging"
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Heroku app name for proper host configuration",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "scripts": {
+    "postdeploy": "bundle exec rails db:migrate && bundle exec rails db:seed"
+  },
+  "environments": {
+    "review": {
+      "env": {
+        "RAILS_ENV": {
+          "value": "edge"
+        },
+        "RACK_ENV": {
+          "value": "edge"
+        }
+      },
+      "scripts": {
+        "postdeploy": "bundle exec rails db:migrate && bundle exec rails db:seed"
+      }
+    }
+  }
+}
