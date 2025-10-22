@@ -142,6 +142,15 @@
           <% end %>
         </tbody>
       </table>
+
+      <!-- Paginación -->
+      <div class="pagination-container">
+        <%= paginate @patients %>
+      </div>
+      
+      <div class="pagination-info">
+        Mostrando <%= page_entries_info @patients, entry_name: 'paciente' %>
+      </div>
     <% else %>
       <div class="empty-state">
         <div class="empty-icon">👥</div>

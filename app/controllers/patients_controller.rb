@@ -18,8 +18,8 @@ class PatientsController < ApplicationController
     # Aplicar ordenamiento
     @patients = @patients.sorted_by(params[:sort])
     
-    # Paginación (opcional, puedes agregar la gema kaminari)
-    @patients = @patients.page(params[:page]).per(20) if respond_to?(:page)
+    # Paginación con kaminari
+    @patients = @patients.page(params[:page]).per(5)
     
     # Para los filtros en la vista
     @cities = Patient.distinct.pluck(:city).compact.sort
