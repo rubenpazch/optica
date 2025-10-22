@@ -51,6 +51,11 @@
               <span>Inicio</span>
             <% end %>
             
+            <%= link_to patients_path, class: "sidebar-nav-link #{'active' if controller_name == 'patients'}" do %>
+              <span class="sidebar-nav-icon">🩺</span>
+              <span>Pacientes</span>
+            <% end %>
+            
             <%= link_to edit_user_registration_path, class: "sidebar-nav-link #{'active' if current_page?(edit_user_registration_path)}" do %>
               <span class="sidebar-nav-icon">👤</span>
               <span>Perfil</span>

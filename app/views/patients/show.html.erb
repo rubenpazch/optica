@@ -1,0 +1,175 @@
+<div class="patient-show">
+  <div class="patient-header">
+    <div class="header-content">
+      <h1 class="patient-name"><%= @patient.full_name %></h1>
+      <span class="status-badge <%= @patient.active? ? 'active' : 'inactive' %>">
+        <%= @patient.status_text %>
+      </span>
+    </div>
+    <div class="header-actions">
+      <%= link_to edit_patient_path(@patient), class: "btn btn-primary" do %>
+        <span class="btn-icon">✏️</span>
+        Editar Paciente
+      <% end %>
+      <%= link_to patients_path, class: "btn btn-secondary" do %>
+        <span class="btn-icon">←</span>
+        Volver a Lista
+      <% end %>
+    </div>
+  </div>
+
+  <div class="patient-details">
+    <div class="details-grid">
+      <!-- Información Personal -->
+      <div class="detail-section">
+        <h3 class="section-title">Información Personal</h3>
+        <div class="detail-card">
+          <div class="detail-item">
+            <label>Nombre Completo</label>
+            <value><%= @patient.full_name %></value>
+          </div>
+          <div class="detail-item">
+            <label>Correo Electrónico</label>
+            <value><%= mail_to @patient.email, @patient.email, class: "email-link" %></value>
+          </div>
+          <div class="detail-item">
+            <label>Teléfono</label>
+            <value><%= link_to @patient.formatted_phone, "tel:#{@patient.phone}", class: "phone-link" %></value>
+          </div>
+          <div class="detail-item">
+            <label>Fecha de Nacimiento</label>
+            <value>
+              <%= @patient.birth_date.strftime("%d de %B de %Y") %>
+              <% if @patient.age %>
+                <span class="age-info">(<%= @patient.age %> años)</span>
+              <% end %>
+            </value>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información de Dirección -->
+      <div class="detail-section">
+        <h3 class="section-title">Dirección</h3>
+        <div class="detail-card">
+          <div class="detail-item">
+            <label>Dirección</label>
+            <value><%= @patient.address %></value>
+          </div>
+          <div class="detail-item">
+            <label>Ciudad</label>
+            <value><%= @patient.city %></value>
+          </div>
+          <div class="detail-item">
+            <label>Estado</label>
+            <value><%= @patient.state %></value>
+          </div>
+          <div class="detail-item">
+            <label>Código Postal</label>
+            <value><%= @patient.zip_code %></value>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contacto de Emergencia -->
+      <div class="detail-section">
+        <h3 class="section-title">Contacto de Emergencia</h3>
+        <div class="detail-card">
+          <div class="detail-item">
+            <label>Nombre del Contacto</label>
+            <value>
+              <%= @patient.emergency_contact.present? ? @patient.emergency_contact : "No especificado" %>
+            </value>
+          </div>
+          <div class="detail-item">
+            <label>Teléfono de Emergencia</label>
+            <value>
+              <% if @patient.emergency_phone.present? %>
+                <%= link_to @patient.emergency_phone, "tel:#{@patient.emergency_phone}", class: "phone-link" %>
+              <% else %>
+                No especificado
+              <% end %>
+            </value>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información del Seguro -->
+      <div class="detail-section">
+        <h3 class="section-title">Información del Seguro</h3>
+        <div class="detail-card">
+          <div class="detail-item">
+            <label>Proveedor de Seguro</label>
+            <value>
+              <%= @patient.insurance_provider.present? ? @patient.insurance_provider : "No especificado" %>
+            </value>
+          </div>
+          <div class="detail-item">
+            <label>Número de Póliza</label>
+            <value>
+              <%= @patient.insurance_number.present? ? @patient.insurance_number : "No especificado" %>
+            </value>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notas -->
+      <div class="detail-section full-width">
+        <h3 class="section-title">Notas Adicionales</h3>
+        <div class="detail-card">
+          <div class="detail-item">
+            <% if @patient.notes.present? %>
+              <div class="notes-content">
+                <%= simple_format(@patient.notes) %>
+              </div>
+            <% else %>
+              <p class="no-notes">No hay notas adicionales para este paciente.</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información del Sistema -->
+  <div class="system-info">
+    <div class="system-card">
+      <h4>Información del Sistema</h4>
+      <div class="system-details">
+        <div class="system-item">
+          <label>Creado:</label>
+          <span><%= @patient.created_at.strftime("%d de %B de %Y a las %H:%M") %></span>
+        </div>
+        <div class="system-item">
+          <label>Última actualización:</label>
+          <span><%= @patient.updated_at.strftime("%d de %B de %Y a las %H:%M") %></span>
+        </div>
+        <div class="system-item">
+          <label>Estado:</label>
+          <span class="status-text <%= @patient.active? ? 'active' : 'inactive' %>">
+            <%= @patient.status_text %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones Adicionales -->
+  <div class="additional-actions">
+    <div class="action-group">
+      <%= link_to toggle_status_patient_path(@patient), method: :post, 
+                  class: "btn #{ @patient.active? ? 'btn-warning' : 'btn-success' }",
+                  data: { confirm: "¿Estás seguro de cambiar el estado de este paciente?" } do %>
+        <span class="btn-icon"><%= @patient.active? ? "⏸️" : "▶️" %></span>
+        <%= @patient.active? ? "Desactivar Paciente" : "Activar Paciente" %>
+      <% end %>
+      
+      <%= link_to patient_path(@patient), method: :delete, 
+                  class: "btn btn-danger",
+                  data: { confirm: "¿Estás seguro de eliminar este paciente? Esta acción no se puede deshacer." } do %>
+        <span class="btn-icon">🗑️</span>
+        Eliminar Paciente
+      <% end %>
+    </div>
+  </div>
+</div>

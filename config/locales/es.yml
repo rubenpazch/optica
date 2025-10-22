@@ -36,11 +36,43 @@ es:
   # Acciones
   actions:
     add_patient: "Agregar Paciente"
+    view_patients: "Ver Pacientes"
     new_appointment: "Nueva Cita"
     manage_inventory: "Gestionar Inventario"
     view_reports: "Ver Reportes"
     account_settings: "Configuración de Cuenta"
     support: "Soporte"
+    
+  # Pacientes
+  patients:
+    title: "Gestión de Pacientes"
+    subtitle: "Administra la información de todos tus pacientes"
+    add_patient: "Agregar Paciente"
+    search_placeholder: "Buscar por nombre, email o teléfono..."
+    all_cities: "Todas las ciudades"
+    all_states: "Todos los estados"
+    all_statuses: "Todos los estados"
+    active: "Activos"
+    inactive: "Inactivos"
+    sort_by: "Ordenar por..."
+    name_asc: "Nombre (A-Z)"
+    name_desc: "Nombre (Z-A)"
+    email_asc: "Email (A-Z)"
+    email_desc: "Email (Z-A)"
+    newest_first: "Más reciente"
+    oldest_first: "Más antiguo"
+    filter: "Filtrar"
+    clear_filters: "Limpiar"
+    total: "Total:"
+    showing: "Mostrando:"
+    no_patients_found: "No se encontraron pacientes"
+    no_matching_filters: "No hay pacientes que coincidan con los filtros aplicados."
+    no_patients_yet: "Aún no has agregado ningún paciente."
+    add_first_patient: "Agregar el primero"
+    patient_created: "El paciente fue creado exitosamente."
+    patient_updated: "El paciente fue actualizado exitosamente."
+    patient_deleted: "El paciente fue eliminado exitosamente."
+    confirm_delete: "¿Estás seguro de que quieres eliminar a %{name}?"
     
   # Formularios
   forms:

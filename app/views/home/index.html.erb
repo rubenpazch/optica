@@ -34,9 +34,14 @@
     <h2 class="actions-title">Acciones Rápidas</h2>
     
     <div class="action-grid">
-      <%= link_to "#", class: "action-card" do %>
+      <%= link_to new_patient_path, class: "action-card" do %>
         <div class="action-icon">👤</div>
         <h3 class="action-title">Agregar Paciente</h3>
+      <% end %>
+      
+      <%= link_to patients_path, class: "action-card" do %>
+        <div class="action-icon">👥</div>
+        <h3 class="action-title">Ver Pacientes</h3>
       <% end %>
       
       <%= link_to "#", class: "action-card" do %>
