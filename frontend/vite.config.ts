@@ -16,8 +16,9 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../public/assets',
-    emptyOutDir: true,
+    outDir: '../public',
+    emptyOutDir: false,
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
         manualChunks: {

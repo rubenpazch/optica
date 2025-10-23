@@ -15,9 +15,9 @@ npm run build
 # Go back to root
 cd ..
 
-echo "📁 Build files are already in Rails public directory!"
+echo "📁 Build files are in Rails public directory!"
 echo "✅ React build completed successfully!"
 
 # List the generated files
-echo "📋 Generated files:"
-ls -la public/dist/
+echo "📋 Generated files in public/:"
+ls -la public/*.html public/assets/ 2>/dev/null || echo "Build output ready"
