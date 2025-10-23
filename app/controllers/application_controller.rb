@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
   # Configure permitted parameters for Devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # Fallback to serve React frontend for SPA routing
+  def fallback_index_html
+    render file: Rails.root.join("public", "dist", "index.html")
+  end
+
   protected
 
   def configure_permitted_parameters
@@ -21,13 +26,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [ :email ])
   end
 
+  private
+
   # Check if this is an API request
   def api_request?
     request.path.start_with?("/api/")
-  end
-
-  # Fallback to serve React frontend for SPA routing
-  def fallback_index_html
-    render file: Rails.root.join("public", "dist", "index.html")
   end
 end
