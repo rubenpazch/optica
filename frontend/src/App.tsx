@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Patients from './pages/Patients';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           }>
             <Route index element={<Home />} />
             <Route path="patients" element={<Patients />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
       </Router>
