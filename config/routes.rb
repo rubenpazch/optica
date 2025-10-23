@@ -33,9 +33,12 @@ Rails.application.routes.draw do
   # Root route - serve React app
   root "application#fallback_index_html"
 
-  # Catch-all route for React frontend (SPA)
-  # This should serve the React index.html for any non-API routes
-  get "*path", to: "application#fallback_index_html", constraints: ->(request) do
-    !request.xhr? && request.format.html?
-  end
+  # Catch-all route for React SPA (must be last)
+  # Exclude static asset paths from catch-all
+  get "*path", to: "application#fallback_index_html",
+    constraints: ->(request) { 
+      !request.xhr? && 
+      request.format.html? && 
+      !request.path.start_with?('/assets')
+    }
 end
