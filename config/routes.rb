@@ -30,6 +30,9 @@ Rails.application.routes.draw do
   # Health check endpoint for load balancers and uptime monitors
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Root route - serve React app
+  root "application#fallback_index_html"
+
   # Catch-all route for React frontend (SPA)
   # This should serve the React index.html for any non-API routes
   get "*path", to: "application#fallback_index_html", constraints: ->(request) do
