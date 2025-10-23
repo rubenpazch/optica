@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   # Fallback to serve React frontend for SPA routing
   def fallback_index_html
-    send_file Rails.root.join("public", "dist", "index.html"), type: "text/html", disposition: "inline"
+    send_file Rails.root.join("public", "assets", "index.html"), type: "text/html", disposition: "inline"
   end
 
   protected
