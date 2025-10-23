@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   # Require authentication by default for all controllers (except Devise controllers)
   before_action :authenticate_user!, unless: :devise_controller?
 
+  # Skip authentication for React app fallback
+  skip_before_action :authenticate_user!, only: [:fallback_index_html]
+
   # Configure permitted parameters for Devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 
