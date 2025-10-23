@@ -1,0 +1,16 @@
+{
+  "name": "optica",
+  "version": "1.0.0",
+  "description": "Optica - React Frontend + Rails API Backend",
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  },
+  "scripts": {
+    "build": "bin/build-frontend",
+    "postinstall": "npm run build"
+  },
+  "cacheDirectories": [
+    "frontend/node_modules"
+  ]
+}

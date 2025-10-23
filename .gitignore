@@ -31,6 +31,12 @@
 
 /public/assets
 
+# Ignore React build files in public directory (built during deployment)
+/public/*.js
+/public/*.css
+/public/*.html
+/public/assets/frontend/
+
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 /config/master.key
@@ -61,6 +67,7 @@ pickle-email-*.html
 
 # Node.js and React
 node_modules/
+frontend/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

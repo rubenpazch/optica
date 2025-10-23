@@ -25,12 +25,12 @@ end
 # Create a test user for development
 if Rails.env.development?
   puts "Creating test user..."
-  
+
   test_user = User.find_or_create_by(email: 'test@example.com') do |user|
     user.password = 'password123'
     user.password_confirmation = 'password123'
   end
-  
+
   if test_user.persisted?
     puts "✅ Test user created successfully!"
     puts "📧 Email: test@example.com"
@@ -39,7 +39,7 @@ if Rails.env.development?
     puts "❌ Failed to create test user:"
     puts test_user.errors.full_messages
   end
-  
+
   puts "Total users in database: #{User.count}"
 end
 
@@ -48,15 +48,15 @@ if Rails.env.development?
   puts "\n" + "="*50
   puts "🏥 Creando pacientes de ejemplo..."
   puts "="*50
-  
+
   # Limpiar pacientes existentes (opcional - descomenta si quieres empezar desde cero)
   # Patient.destroy_all
   # puts "🗑️ Pacientes anteriores eliminados"
-  
+
   # Datos de ejemplo realistas
   sample_patients = [
     {
-      first_name: "María", 
+      first_name: "María",
       last_name: "García López",
       email: "maria.garcia@email.com",
       phone: "+52 555-0123-456",
@@ -69,7 +69,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Carlos", 
+      first_name: "Carlos",
       last_name: "Rodríguez Morales",
       email: "carlos.rodriguez@gmail.com",
       phone: "+52 555-0987-654",
@@ -82,7 +82,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Ana", 
+      first_name: "Ana",
       last_name: "Martínez Silva",
       email: "ana.martinez@hotmail.com",
       phone: "+52 555-0555-123",
@@ -95,7 +95,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Roberto", 
+      first_name: "Roberto",
       last_name: "Sánchez Torres",
       email: "roberto.sanchez@yahoo.com",
       phone: "+52 555-0777-888",
@@ -108,7 +108,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Lucía", 
+      first_name: "Lucía",
       last_name: "Fernández Ruiz",
       email: "lucia.fernandez@empresa.com",
       phone: "+52 555-0333-444",
@@ -121,7 +121,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Miguel", 
+      first_name: "Miguel",
       last_name: "Hernández Castro",
       email: "miguel.hernandez@correo.mx",
       phone: "+52 555-0999-000",
@@ -134,7 +134,7 @@ if Rails.env.development?
       active: false
     },
     {
-      first_name: "Isabella", 
+      first_name: "Isabella",
       last_name: "López Vargas",
       email: "isabella.lopez@universidad.edu",
       phone: "+52 555-0111-222",
@@ -147,7 +147,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Francisco", 
+      first_name: "Francisco",
       last_name: "Moreno Jiménez",
       email: "francisco.moreno@negocio.com",
       phone: "+52 555-0666-777",
@@ -160,7 +160,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Carmen", 
+      first_name: "Carmen",
       last_name: "Ramírez Flores",
       email: "carmen.ramirez@hospital.gob.mx",
       phone: "+52 555-0444-555",
@@ -173,7 +173,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Diego", 
+      first_name: "Diego",
       last_name: "Torres Mendoza",
       email: "diego.torres@startup.tech",
       phone: "+52 555-0888-999",
@@ -186,7 +186,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Elena", 
+      first_name: "Elena",
       last_name: "Vásquez Herrera",
       email: "elena.vasquez@arte.mx",
       phone: "+52 555-0222-333",
@@ -199,7 +199,7 @@ if Rails.env.development?
       active: true
     },
     {
-      first_name: "Alejandro", 
+      first_name: "Alejandro",
       last_name: "Gutiérrez Peña",
       email: "alejandro.gutierrez@construccion.com",
       phone: "+52 555-0123-789",
@@ -212,13 +212,13 @@ if Rails.env.development?
       active: false
     }
   ]
-  
+
   # Crear pacientes
   created_count = 0
   sample_patients.each_with_index do |patient_data, index|
     # Verificar si el paciente ya existe
     existing_patient = Patient.find_by(email: patient_data[:email])
-    
+
     if existing_patient
       puts "⚠️  Paciente ya existe: #{patient_data[:first_name]} #{patient_data[:last_name]}"
     else
@@ -227,7 +227,7 @@ if Rails.env.development?
       puts "✅ Creado: #{patient.first_name} #{patient.last_name} (#{patient.email})"
     end
   end
-  
+
   puts "\n" + "="*50
   puts "📊 RESUMEN DE PACIENTES CREADOS"
   puts "="*50
@@ -236,7 +236,7 @@ if Rails.env.development?
   puts "✅ Pacientes activos: #{Patient.active.count}"
   puts "⏸️  Pacientes inactivos: #{Patient.inactive.count}"
   puts "🏙️ Ciudades diferentes: #{Patient.distinct.count(:city)}"
-  
+
   puts "\n🎯 Datos para probar:"
   puts "   • Busca por: 'María', 'García', 'email.com'"
   puts "   • Filtra por ciudad: 'Ciudad de México'"

@@ -1,25 +1,38 @@
 Rails.application.routes.draw do
-  get "home/index"
-  # Devise routes for authentication
-  devise_for :users
-  
-  # Patient management routes
-  resources :patients do
-    member do
-      post :toggle_status
+  # API routes
+  namespace :api do
+    namespace :v1 do
+      # Authentication routes (will be handled by devise-jwt)
+      devise_for :users,
+        path: "",
+        path_names: {
+          sign_in: "users/sign_in",
+          sign_out: "users/sign_out",
+          registration: "users"
+        },
+        controllers: {
+          sessions: "api/v1/sessions",
+          registrations: "api/v1/registrations"
+        }
+
+      # API endpoints
+      get "dashboard", to: "home#dashboard"
+      get "current_user", to: "home#current_user"
+
+      resources :patients do
+        member do
+          post :toggle_status
+        end
+      end
     end
   end
-  
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check endpoint for load balancers and uptime monitors
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  root "home#index"
+  # Catch-all route for React frontend (SPA)
+  # This should serve the React index.html for any non-API routes
+  get "*path", to: "application#fallback_index_html", constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end

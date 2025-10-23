@@ -23,6 +23,12 @@ gem "jbuilder"
 # Devise for authentication
 gem "devise"
 
+# JWT for API authentication
+gem "devise-jwt"
+
+# CORS for API requests from React frontend
+gem "rack-cors"
+
 # Pagination
 gem "kaminari"
 

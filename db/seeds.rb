@@ -1,3 +1,16 @@
+# Create test user
+puts "="*50
+puts "👤 Creando usuario de prueba..."
+puts "="*50
+
+User.destroy_all
+test_user = User.create!(
+  email: "test@optica.com",
+  password: "password123",
+  password_confirmation: "password123"
+)
+puts "✅ Usuario creado: #{test_user.email}"
+
 # Crear pacientes de ejemplo
 puts "="*50
 puts "🏥 Creando pacientes de ejemplo..."
@@ -10,7 +23,7 @@ Patient.destroy_all
 patients_data = [
   {
     first_name: "Juan",
-    last_name: "Pérez", 
+    last_name: "Pérez",
     email: "juan.perez@ejemplo.com",
     phone: "555-010661",
     birth_date: Date.new(1985, 3, 15),
@@ -29,7 +42,7 @@ patients_data = [
     city: "Barcelona",
     state: "Cataluña",
     address: "Avenida Diagonal 456",
-    zip_code: "08008", 
+    zip_code: "08008",
     active: true
   },
   {
@@ -45,7 +58,7 @@ patients_data = [
     active: true
   },
   {
-    first_name: "Ana", 
+    first_name: "Ana",
     last_name: "Martínez",
     email: "ana.martinez@ejemplo.com",
     phone: "555-046601",
@@ -58,7 +71,7 @@ patients_data = [
   },
   {
     first_name: "Luis",
-    last_name: "López", 
+    last_name: "López",
     email: "luis.lopez@ejemplo.com",
     phone: "555-050661",
     birth_date: Date.new(1982, 9, 30),
@@ -110,6 +123,7 @@ created_count = 0
 
 patients_data.each do |patient_attrs|
   begin
+    patient_attrs[:user] = test_user  # Associate with the test user
     patient = Patient.create!(patient_attrs)
     puts "✓ Paciente creado: #{patient.first_name} #{patient.last_name}"
     created_count += 1
