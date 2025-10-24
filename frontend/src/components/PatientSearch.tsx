@@ -171,9 +171,9 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
                       <p className="text-sm text-gray-500 truncate">
                         {patient.email && highlightMatch(patient.email, searchTerm)}
                       </p>
-                      {patient.phone && (
+                      {patient.dni && (
                         <p className="text-xs text-gray-400">
-                          {highlightMatch(patient.phone, searchTerm)}
+                          DNI: {highlightMatch(patient.dni, searchTerm)}
                         </p>
                       )}
                     </div>
