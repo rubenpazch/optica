@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -36,6 +37,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
         {/* Right side - User menu */}
         <div className="flex items-center space-x-4">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Notifications */}
           <button className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors duration-150">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

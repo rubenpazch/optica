@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
 interface SidebarProps {
@@ -10,10 +11,11 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   const menuItems = [
     {
-      name: 'Dashboard',
+      name: t('sidebar.dashboard'),
       path: '/',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )
     },
     {
-      name: 'Patients',
+      name: t('sidebar.patients'),
       path: '/patients',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )
     },
     {
-      name: 'Appointments',
+      name: t('sidebar.appointments'),
       path: '/appointments',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )
     },
     {
-      name: 'Reports',
+      name: t('sidebar.reports'),
       path: '/reports',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )
     },
     {
-      name: 'Settings',
+      name: t('sidebar.settings'),
       path: '/settings',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

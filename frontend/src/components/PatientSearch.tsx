@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Patient } from '../types';
 import { patientsAPI } from '../services/api';
 
@@ -15,6 +16,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -128,7 +130,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => searchTerm.length >= 2 && setIsOpen(true)}
-          placeholder="Search patients by name, email, phone, or ID..."
+          placeholder={t('dashboard.searchPlaceholder')}
           className="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
         />
         {loading && (
@@ -147,7 +149,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
           {results.length > 0 ? (
             <>
               <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase bg-gray-50">
-                Found {results.length} patient{results.length !== 1 ? 's' : ''}
+                {t('patients.title')}: {results.length} {results.length === 1 ? '' : 's'}
               </div>
               {results.map((patient, index) => (
                 <button
@@ -183,7 +185,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        {patient.active ? 'Active' : 'Inactive'}
+                        {patient.active ? t('common.active') : t('common.inactive')}
                       </span>
                     </div>
                   </div>
@@ -195,8 +197,8 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
               <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="mt-2 text-sm text-gray-600">No patients found</p>
-              <p className="mt-1 text-xs text-gray-500">Try a different search term</p>
+              <p className="mt-2 text-sm text-gray-600">{t('dashboard.noResults')}</p>
+              <p className="mt-1 text-xs text-gray-500">{t('errors.tryDifferentSearch')}</p>
             </div>
           ) : null}
 
@@ -215,7 +217,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelectPatient }) => {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-medium text-green-600">Create new patient</p>
+                <p className="text-sm font-medium text-green-600">{t('dashboard.createNewPatient')}</p>
                 {searchTerm && (
                   <p className="text-xs text-gray-500">with search term: "{searchTerm}"</p>
                 )}

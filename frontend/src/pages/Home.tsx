@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Patient } from '../types';
 import PatientSearch from '../components/PatientSearch';
 import PatientDetails from '../components/PatientDetails';
@@ -7,6 +8,7 @@ import PatientDetails from '../components/PatientDetails';
 const Home: React.FC = () => {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSelectPatient = (patient: Patient) => {
     setSelectedPatient(patient);
@@ -26,10 +28,10 @@ const Home: React.FC = () => {
           </svg>
         </div>
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Welcome to Optica
+          {t('dashboard.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Find and manage your patients efficiently. Search by name, email, phone, or any other field.
+          {t('dashboard.subtitle')}
         </p>
       </div>
 
@@ -46,26 +48,26 @@ const Home: React.FC = () => {
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Quick Tips
+              {t('quickTips.title')}
             </h3>
             <ul className="space-y-2 text-sm text-blue-800">
               <li className="flex items-start">
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Type at least 2 characters to start searching
+                {t('quickTips.tip1')}
               </li>
               <li className="flex items-start">
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Use arrow keys to navigate results and Enter to select
+                {t('quickTips.tip2')}
               </li>
               <li className="flex items-start">
                 <svg className="w-4 h-4 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Can't find a patient? Create a new one directly from the search results
+                {t('quickTips.tip3')}
               </li>
             </ul>
           </div>
@@ -82,7 +84,7 @@ const Home: React.FC = () => {
       {/* Quick Actions */}
       {!selectedPatient && (
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.quickActions')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => navigate('/patients/new')}
@@ -93,8 +95,8 @@ const Home: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">New Patient</h3>
-              <p className="text-sm text-gray-600">Register a new patient</p>
+              <h3 className="font-semibold text-gray-900 mb-1">{t('dashboard.newPatient')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.registerNewPatient')}</p>
             </button>
 
             <button className="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-green-500 hover:shadow-md transition-all text-left group">
@@ -103,8 +105,8 @@ const Home: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Appointments</h3>
-              <p className="text-sm text-gray-600">Manage appointments</p>
+              <h3 className="font-semibold text-gray-900 mb-1">{t('dashboard.appointments')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.manageAppointments')}</p>
             </button>
 
             <button className="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:shadow-md transition-all text-left group">
@@ -113,8 +115,8 @@ const Home: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Reports</h3>
-              <p className="text-sm text-gray-600">View analytics</p>
+              <h3 className="font-semibold text-gray-900 mb-1">{t('dashboard.reports')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.viewAnalytics')}</p>
             </button>
           </div>
         </div>

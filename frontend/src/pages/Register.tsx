@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
 const Register: React.FC = () => {
@@ -11,13 +12,14 @@ const Register: React.FC = () => {
   
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('auth.passwordMismatch'));
       return;
     }
 
@@ -48,10 +50,10 @@ const Register: React.FC = () => {
               </div>
             </div>
             <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-              Create your account
+              {t('auth.createAccount')}
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Join Optica and start managing your practice
+              {t('auth.pleaseSignIn')}
             </p>
           </div>
           

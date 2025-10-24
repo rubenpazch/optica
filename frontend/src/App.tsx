@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
+import './i18n/config';
 
 function App() {
   return (
