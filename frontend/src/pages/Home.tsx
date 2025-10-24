@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Patient } from '../types';
 import PatientSearch from '../components/PatientSearch';
 import PatientDetails from '../components/PatientDetails';
 
 const Home: React.FC = () => {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const navigate = useNavigate();
 
   const handleSelectPatient = (patient: Patient) => {
     setSelectedPatient(patient);
@@ -82,7 +84,10 @@ const Home: React.FC = () => {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:shadow-md transition-all text-left group">
+            <button
+              onClick={() => navigate('/patients/new')}
+              className="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:shadow-md transition-all text-left group"
+            >
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500 transition-colors">
                 <svg className="w-6 h-6 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />

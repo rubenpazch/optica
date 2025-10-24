@@ -4,11 +4,10 @@ class Patient < ApplicationRecord
   # Validaciones
   validates :first_name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :last_name, presence: true, length: { minimum: 2, maximum: 50 }
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :phone, presence: true, length: { minimum: 10, maximum: 15 }
-  validates :birth_date, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+  validates :phone, presence: true, length: { minimum: 9, maximum: 15 }
+  validates :dni, presence: true, length: { is: 8 }, uniqueness: true
+  # birth_date, city, state are now optional
 
   # Scopes para búsqueda y filtrado
   scope :active, -> { where(active: true) }
@@ -16,8 +15,8 @@ class Patient < ApplicationRecord
   scope :search, ->(term) {
     return all if term.blank?
 
-    where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ? OR phone ILIKE ?",
-          "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%")
+    where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ? OR phone ILIKE ? OR dni ILIKE ?",
+          "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%")
   }
   scope :by_city, ->(city) { where(city: city) if city.present? }
   scope :by_state, ->(state) { where(state: state) if state.present? }

@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Patients from './pages/Patients';
+import NewPatient from './pages/NewPatient';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
@@ -22,6 +23,7 @@ function App() {
           }>
             <Route index element={<Home />} />
             <Route path="patients" element={<Patients />} />
+            <Route path="patients/new" element={<NewPatient />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>

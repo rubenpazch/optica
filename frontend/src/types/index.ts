@@ -8,11 +8,14 @@ export interface Patient {
   id: number;
   first_name: string;
   last_name: string;
+  dni?: string;
   email: string;
   phone?: string;
   address?: string;
   city?: string;
   state?: string;
+  emergency_contact?: string;
+  emergency_phone?: string;
   active: boolean;
   notes?: string;
   created_at: string;
