@@ -39,7 +39,7 @@ const PrescriptionsList: React.FC = () => {
 
   useEffect(() => {
     filterAndSortPrescriptions();
-  }, [prescriptions, statusFilter, sortBy, sortOrder]);
+  }, [prescriptions, statusFilter, sortBy, sortOrder, selectedPatientId]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -56,10 +56,12 @@ const PrescriptionsList: React.FC = () => {
     try {
       setLoading(true);
       const data = await prescriptionsAPI.getAll(page, perPage);
+      console.log('Prescriptions API response:', data);
       setPrescriptions(data.prescriptions || []);
-      setTotalPages(data.pagination.total_pages);
+      setTotalPages(data.pagination?.total_pages || 1);
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
+      setPrescriptions([]);
     } finally {
       setLoading(false);
     }
@@ -88,6 +90,7 @@ const PrescriptionsList: React.FC = () => {
     setSelectedPatientId(patientId);
     setSearchTerm(displayName);
     setShowSearchResults(false);
+    setCurrentPage(1); // Reset to first page when filtering by patient
   };
 
   const handleClearSearch = () => {
@@ -95,6 +98,7 @@ const PrescriptionsList: React.FC = () => {
     setSelectedPatientId(null);
     setSearchResults([]);
     setShowSearchResults(false);
+    setCurrentPage(1); // Reset to first page when clearing search
   };
 
   const filterAndSortPrescriptions = () => {
@@ -155,6 +159,27 @@ const PrescriptionsList: React.FC = () => {
       setSortOrder('desc');
     }
   };
+
+  // Calculate pagination based on filtered results when patient is selected, otherwise use server pagination
+  const calculateDisplayPagination = () => {
+    if (selectedPatientId) {
+      // When filtering by patient, paginate the filtered results client-side
+      return Math.ceil(filteredPrescriptions.length / perPage);
+    }
+    return totalPages;
+  };
+
+  const getDisplayedPrescriptions = () => {
+    if (selectedPatientId) {
+      // Client-side pagination for filtered results
+      const startIndex = (currentPage - 1) * perPage;
+      const endIndex = startIndex + perPage;
+      return filteredPrescriptions.slice(startIndex, endIndex);
+    }
+    return filteredPrescriptions;
+  };
+
+  const displayTotalPages = calculateDisplayPagination();
 
   const handleViewPrescription = (prescriptionId: number | undefined) => {
     if (prescriptionId) {
@@ -372,7 +397,7 @@ const PrescriptionsList: React.FC = () => {
       ) : (
         <>
           <div className="space-y-3">
-            {filteredPrescriptions.map((prescription) => (
+            {getDisplayedPrescriptions().map((prescription) => (
               <div
                 key={prescription.id}
                 onClick={() => handleViewPrescription(prescription.id)}
@@ -472,7 +497,7 @@ const PrescriptionsList: React.FC = () => {
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
+          {displayTotalPages > 1 && (
             <div className="flex items-center justify-center space-x-2 mt-6">
               <button
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -483,7 +508,7 @@ const PrescriptionsList: React.FC = () => {
               </button>
               
               <div className="flex items-center space-x-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                {Array.from({ length: displayTotalPages }, (_, i) => i + 1).map((page) => (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
@@ -499,8 +524,8 @@ const PrescriptionsList: React.FC = () => {
               </div>
 
               <button
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(Math.min(displayTotalPages, currentPage + 1))}
+                disabled={currentPage === displayTotalPages}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {t('common.next') || 'Next'}

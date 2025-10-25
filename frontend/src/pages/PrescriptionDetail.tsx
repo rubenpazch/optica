@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { prescriptionsAPI, patientsAPI } from '../services/api';
+import { prescriptionsAPI } from '../services/api';
 
 interface PatientData {
   id: number;
@@ -68,41 +68,38 @@ interface PrescriptionData {
   prescription_eyes: PrescriptionEye[];
   lenses: Lens[];
   frame: Frame;
+  patient: PatientData;
   created_at: string;
 }
 
 const PrescriptionDetail: React.FC = () => {
-  const { id, prescriptionId } = useParams<{ id: string; prescriptionId: string }>();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const [patient, setPatient] = useState<PatientData | null>(null);
   const [prescription, setPrescription] = useState<PrescriptionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [deleting, setDeleting] = useState(false);
 
-  // Load prescription and patient data
+  // Load prescription data
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const patientResponse = await patientsAPI.getOne(parseInt(id!, 10));
-        setPatient(patientResponse);
-
-        const prescriptionResponse = await prescriptionsAPI.getOne(parseInt(prescriptionId!, 10));
+        const prescriptionResponse = await prescriptionsAPI.getOne(parseInt(id!, 10));
         setPrescription(prescriptionResponse);
       } catch (err: any) {
-        setError(t('prescription.loadError'));
+        setError(t('prescription.loadError') || 'Error loading prescription');
       } finally {
         setLoading(false);
       }
     };
 
-    if (id && prescriptionId) {
+    if (id) {
       loadData();
     }
-  }, [id, prescriptionId, t]);
+  }, [id, t]);
 
   const handleDelete = async () => {
     if (!window.confirm(t('prescription.deleteConfirm'))) {
@@ -111,12 +108,12 @@ const PrescriptionDetail: React.FC = () => {
 
     setDeleting(true);
     try {
-      await prescriptionsAPI.delete(parseInt(prescriptionId!, 10));
-      navigate(`/patients/${id}`, {
+      await prescriptionsAPI.delete(parseInt(id!, 10));
+      navigate('/prescriptions', {
         state: { message: t('prescription.deletedSuccessfully') },
       });
     } catch (err: any) {
-      setError(t('prescription.deleteFailed'));
+      setError(t('prescription.deleteFailed') || 'Error deleting prescription');
     } finally {
       setDeleting(false);
     }
@@ -146,16 +143,16 @@ const PrescriptionDetail: React.FC = () => {
     );
   }
 
-  if (!prescription || !patient) {
+  if (!prescription) {
     return (
       <div className="max-w-6xl mx-auto mt-10">
         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-700">{error || t('prescription.notFound')}</p>
+          <p className="text-red-700">{error || t('prescription.notFound') || 'Prescription not found'}</p>
           <button
-            onClick={() => navigate(`/patients/${id}`)}
+            onClick={() => navigate('/prescriptions')}
             className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
           >
-            {t('common.back')}
+            {t('common.back') || 'Back'}
           </button>
         </div>
       </div>
@@ -177,7 +174,7 @@ const PrescriptionDetail: React.FC = () => {
       {/* Header */}
       <div className="mb-8">
         <button
-          onClick={() => navigate(`/patients/${id}`)}
+          onClick={() => navigate('/prescriptions')}
           className="text-blue-600 hover:text-blue-800 mb-4"
         >
           ← {t('common.back')}
@@ -188,7 +185,7 @@ const PrescriptionDetail: React.FC = () => {
               {t('prescription.prescriptionDetails')}
             </h1>
             <p className="text-gray-600 mt-2">
-              {t('prescription.patient')}: {patient.first_name} {patient.last_name}
+              {t('prescription.patient')}: {prescription.patient?.first_name} {prescription.patient?.last_name}
             </p>
             <p className="text-gray-600">
               {t('prescription.orderNumber')}: {prescription.order_number}

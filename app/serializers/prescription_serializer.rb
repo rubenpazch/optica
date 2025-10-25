@@ -67,12 +67,28 @@ class PrescriptionSerializer
   end
 
   def serialize_lens(lens)
+    # Handle coatings - could be nil, a plain string, or JSON array
+    coatings_value = lens.coatings
+    if coatings_value.present?
+      if coatings_value.is_a?(String)
+        begin
+          # Try to parse as JSON (for array format)
+          coatings_value = JSON.parse(coatings_value)
+        rescue JSON::ParserError
+          # If it fails, it's a plain string - wrap it in an array
+          coatings_value = [coatings_value]
+        end
+      end
+    else
+      coatings_value = []
+    end
+
     {
       id: lens.id,
       eye_type: lens.eye_type,
       lens_type: lens.lens_type,
       material: lens.material,
-      coatings: lens.coatings.is_a?(String) ? JSON.parse(lens.coatings) : lens.coatings,
+      coatings: coatings_value,
       index: lens.index,
       tint: lens.tint,
       photochromic: lens.photochromic,
