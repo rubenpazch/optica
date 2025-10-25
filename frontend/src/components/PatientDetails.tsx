@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Patient } from '../types';
 
 interface PatientDetailsProps {
@@ -7,6 +8,11 @@ interface PatientDetailsProps {
 }
 
 const PatientDetails: React.FC<PatientDetailsProps> = ({ patient, onClose }) => {
+  const navigate = useNavigate();
+
+  const handleViewSubscriptions = () => {
+    navigate(`/patients/${patient.id}/prescriptions`);
+  };
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
       {/* Header */}
@@ -136,8 +142,10 @@ const PatientDetails: React.FC<PatientDetailsProps> = ({ patient, onClose }) => 
             <button className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
               View Full Profile
             </button>
-            <button className="flex-1 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-              Edit Patient
+            <button 
+              onClick={handleViewSubscriptions}
+              className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+              View Subscriptions
             </button>
             <button className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

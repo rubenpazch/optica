@@ -3,11 +3,59 @@ class Api::V1::PrescriptionsController < Api::V1::BaseController
   before_action :set_prescription, only: [:show, :update, :destroy]
   before_action :authorize_prescription!, only: [:show, :update, :destroy]
 
+  # GET /api/v1/prescriptions (all prescriptions)
+  def all
+    page = params[:page].to_i || 1
+    per_page = params[:per_page].to_i || 20
+    
+    @prescriptions = current_user.prescriptions.includes(:patient).by_exam_date
+    @total_count = @prescriptions.count
+    @prescriptions = @prescriptions.limit(per_page).offset((page - 1) * per_page)
+    
+    render json: {
+      prescriptions: @prescriptions.map { |p| PrescriptionSerializer.new(p).serializable_hash },
+      pagination: {
+        current_page: page,
+        per_page: per_page,
+        total_count: @total_count,
+        total_pages: (@total_count.to_f / per_page).ceil
+      }
+    }
+  end
+
+  # GET /api/v1/prescriptions/search (search autocomplete)
+  def search
+    query = params[:q].to_s.downcase.strip
+    limit = params[:limit].to_i || 10
+    
+    if query.blank?
+      render json: { results: [] }
+      return
+    end
+    
+    @patients = current_user.patients.where(
+      "LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(dni) LIKE ?",
+      "%#{query}%", "%#{query}%", "%#{query}%"
+    ).limit(limit)
+    
+    results = @patients.map do |patient|
+      {
+        id: patient.id,
+        first_name: patient.first_name,
+        last_name: patient.last_name,
+        dni: patient.dni,
+        display_name: "#{patient.first_name} #{patient.last_name}#{patient.dni ? " (#{patient.dni})" : ""}"
+      }
+    end
+    
+    render json: { results: results }
+  end
+
   # GET /api/v1/patients/:patient_id/prescriptions
   def index
     authorize_patient!(@patient)
     @prescriptions = @patient.prescriptions.by_exam_date
-    render json: PrescriptionSerializer.new(@prescriptions, is_collection: true).serializable_hash
+    render json: @prescriptions.map { |p| PrescriptionSerializer.new(p).serializable_hash }
   end
 
   # GET /api/v1/prescriptions/:id

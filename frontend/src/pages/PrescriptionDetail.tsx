@@ -131,6 +131,10 @@ const PrescriptionDetail: React.FC = () => {
     return `$${parseFloat(String(value)).toFixed(2)}`;
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -192,25 +196,33 @@ const PrescriptionDetail: React.FC = () => {
           </div>
           <div className="flex gap-2">
             <button
+              onClick={handlePrint}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium flex items-center gap-2 print:hidden"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                />
+              </svg>
+              {t('common.print')}
+            </button>
+            <button
               onClick={() =>
                 navigate(`/patients/${id}/prescriptions/${prescription.id}/edit`)
               }
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium"
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium print:hidden"
             >
               {t('common.edit')}
             </button>
             <button
               onClick={handleDelete}
               disabled={deleting}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium disabled:bg-gray-400"
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium disabled:bg-gray-400 print:hidden"
             >
               {deleting ? t('common.deleting') : t('common.delete')}
-            </button>
-            <button
-              onClick={() => window.print()}
-              className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 font-medium"
-            >
-              {t('common.print')}
             </button>
           </div>
         </div>

@@ -33,3 +33,21 @@
     @apply bg-white overflow-hidden shadow rounded-lg;
   }
 }
+
+@media print {
+  body {
+    background: white;
+  }
+  
+  .print:hidden {
+    display: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-before {
+    page-break-before: always;
+  }
+}

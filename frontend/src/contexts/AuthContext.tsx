@@ -28,7 +28,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const currentUser = await authAPI.getCurrentUser();
       setUser(currentUser);
-    } catch (error) {
+    } catch (error: any) {
+      // Silently handle 401 errors (user not authenticated yet)
+      // This is expected on first load before login
+      if (error.response?.status === 401) {
+        // User is not logged in, this is expected
+      } else {
+        // Log other errors for debugging
+        console.error('Auth check error:', error);
+      }
       setUser(null);
     } finally {
       setLoading(false);

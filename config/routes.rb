@@ -26,7 +26,12 @@ Rails.application.routes.draw do
         resources :prescriptions, only: [:index, :create]
       end
 
-      resources :prescriptions, only: [:show, :update, :destroy]
+      resources :prescriptions, only: [:show, :update, :destroy] do
+        collection do
+          get :all
+          get :search
+        end
+      end
     end
   end
 

@@ -122,6 +122,20 @@ export const dashboardAPI = {
 
 // Prescriptions API
 export const prescriptionsAPI = {
+  getAll: async (page = 1, perPage = 20) => {
+    const response = await api.get('/prescriptions/all', {
+      params: { page, per_page: perPage }
+    });
+    return response.data;
+  },
+
+  search: async (query: string, limit = 10) => {
+    const response = await api.get('/prescriptions/search', {
+      params: { q: query, limit }
+    });
+    return response.data;
+  },
+
   getByPatient: async (patientId: number) => {
     const response = await api.get(`/patients/${patientId}/prescriptions`);
     return response.data;

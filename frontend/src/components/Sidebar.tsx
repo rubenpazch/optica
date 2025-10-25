@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
@@ -12,6 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
   const { user } = useAuth();
   const { t } = useTranslation();
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
   const menuItems = [
     {
@@ -25,12 +26,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     },
     {
       name: t('sidebar.patients'),
-      path: '/patients',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
-      )
+      ),
+      submenu: [
+        {
+          name: t('sidebar.patientsList') || 'List of Patients',
+          path: '/patients'
+        },
+        {
+          name: t('sidebar.prescriptions') || 'Prescriptions',
+          path: '/prescriptions'
+        }
+      ]
     },
     {
       name: t('sidebar.appointments'),
@@ -113,21 +123,73 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <nav className="flex-1 overflow-y-auto p-4">
             <ul className="space-y-2">
               {menuItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    to={item.path}
-                    onClick={onClose}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-150 ${
-                      isActiveRoute(item.path)
-                        ? 'bg-blue-50 text-blue-700 font-medium'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    <span className={isActiveRoute(item.path) ? 'text-blue-600' : 'text-gray-500'}>
-                      {item.icon}
-                    </span>
-                    <span>{item.name}</span>
-                  </Link>
+                <li key={item.name}>
+                  {item.path ? (
+                    // Regular menu item
+                    <Link
+                      to={item.path}
+                      onClick={onClose}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-150 ${
+                        isActiveRoute(item.path)
+                          ? 'bg-blue-50 text-blue-700 font-medium'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <span className={isActiveRoute(item.path) ? 'text-blue-600' : 'text-gray-500'}>
+                        {item.icon}
+                      </span>
+                      <span>{item.name}</span>
+                    </Link>
+                  ) : (
+                    // Menu item with submenu
+                    <div>
+                      <button
+                        onClick={() =>
+                          setExpandedMenu(expandedMenu === item.name ? null : item.name)
+                        }
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors duration-150 text-gray-700 hover:bg-gray-100"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-500">{item.icon}</span>
+                          <span>{item.name}</span>
+                        </div>
+                        <svg
+                          className={`w-4 h-4 transition-transform ${
+                            expandedMenu === item.name ? 'rotate-180' : ''
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                          />
+                        </svg>
+                      </button>
+                      {expandedMenu === item.name && item.submenu && (
+                        <ul className="mt-2 space-y-1 pl-2 border-l-2 border-gray-200">
+                          {item.submenu.map((subitem) => (
+                            <li key={subitem.path}>
+                              <Link
+                                to={subitem.path}
+                                onClick={onClose}
+                                className={`flex items-center px-4 py-2 rounded-lg text-sm transition-colors duration-150 ${
+                                  isActiveRoute(subitem.path)
+                                    ? 'bg-blue-50 text-blue-700 font-medium'
+                                    : 'text-gray-600 hover:bg-gray-100'
+                                }`}
+                              >
+                                {subitem.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

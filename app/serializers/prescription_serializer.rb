@@ -24,11 +24,30 @@ class PrescriptionSerializer
       lenses: @prescription.lenses.map { |lens| serialize_lens(lens) },
       frame: serialize_frame(@prescription.frame),
       patient_id: @prescription.patient_id,
+      patient: serialize_patient(@prescription.patient),
       user_id: @prescription.user_id
     }
   end
 
   private
+
+  def serialize_patient(patient)
+    return nil if patient.nil?
+
+    {
+      id: patient.id,
+      first_name: patient.first_name,
+      last_name: patient.last_name,
+      dni: patient.dni,
+      email: patient.email,
+      phone: patient.phone,
+      address: patient.address,
+      city: patient.city,
+      state: patient.state,
+      active: patient.active,
+      created_at: patient.created_at
+    }
+  end
 
   def serialize_eye(eye)
     {
