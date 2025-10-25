@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PatientsResponse } from '../types';
 import { patientsAPI } from '../services/api';
 
 const Patients: React.FC = () => {
+  const navigate = useNavigate();
   const [patientsData, setPatientsData] = useState<PatientsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -192,6 +194,12 @@ const Patients: React.FC = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                      <button
+                        onClick={() => navigate(`/patients/${patient.id}`)}
+                        className="text-blue-600 hover:text-blue-900"
+                      >
+                        View Prescriptions
+                      </button>
                       <button
                         onClick={() => handleToggleStatus(patient.id)}
                         className="text-indigo-600 hover:text-indigo-900"

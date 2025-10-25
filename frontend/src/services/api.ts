@@ -120,4 +120,31 @@ export const dashboardAPI = {
   },
 };
 
+// Prescriptions API
+export const prescriptionsAPI = {
+  getByPatient: async (patientId: number) => {
+    const response = await api.get(`/patients/${patientId}/prescriptions`);
+    return response.data;
+  },
+
+  getOne: async (id: number) => {
+    const response = await api.get(`/prescriptions/${id}`);
+    return response.data;
+  },
+
+  create: async (patientId: number, prescription: any) => {
+    const response = await api.post(`/patients/${patientId}/prescriptions`, { prescription });
+    return response.data;
+  },
+
+  update: async (id: number, prescription: any) => {
+    const response = await api.patch(`/prescriptions/${id}`, { prescription });
+    return response.data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    await api.delete(`/prescriptions/${id}`);
+  },
+};
+
 export default api;

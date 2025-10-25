@@ -23,7 +23,10 @@ Rails.application.routes.draw do
         member do
           post :toggle_status
         end
+        resources :prescriptions, only: [:index, :create]
       end
+
+      resources :prescriptions, only: [:show, :update, :destroy]
     end
   end
 

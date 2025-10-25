@@ -1,5 +1,6 @@
 class Patient < ApplicationRecord
   belongs_to :user
+  has_many :prescriptions, dependent: :destroy
 
   # Validaciones
   validates :first_name, presence: true, length: { minimum: 2, maximum: 50 }
