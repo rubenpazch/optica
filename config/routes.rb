@@ -19,6 +19,13 @@ Rails.application.routes.draw do
       get "dashboard", to: "home#dashboard"
       get "current_user", to: "home#current_user"
 
+      # User management (admin only)
+      resources :users, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          post "reset-password"
+        end
+      end
+
       resources :patients do
         member do
           post :toggle_status

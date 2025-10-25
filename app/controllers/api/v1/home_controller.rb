@@ -15,11 +15,7 @@ class Api::V1::HomeController < Api::V1::BaseController
   def current_user
     user = super  # Call Devise's current_user method
     render json: {
-      user: {
-        id: user.id,
-        email: user.email,
-        created_at: user.created_at
-      }
+      user: UserSerializer.new(user).serializable_hash[:data][:attributes]
     }
   end
 end

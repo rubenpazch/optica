@@ -9,6 +9,7 @@ class UserSerializer
         attributes: {
           id: @user.id,
           email: @user.email,
+          role: @user.role.to_s,
           created_at: @user.created_at
         }
       }

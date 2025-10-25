@@ -50,4 +50,12 @@ class Api::V1::BaseController < ActionController::API
   def render_success(data = {}, message = "Success")
     render json: { message: message, data: data }, status: :ok
   end
+
+  def authorize_admin!
+    unless current_user&.admin?
+      render json: {
+        error: "You don't have permission to perform this action. Admin access required."
+      }, status: :forbidden
+    end
+  end
 end

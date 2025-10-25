@@ -8,8 +8,8 @@ import NewPrescription from './pages/NewPrescription';
 import PrescriptionListCards from './pages/PrescriptionListCards';
 import PrescriptionsList from './pages/PrescriptionsList';
 import PrescriptionDetail from './pages/PrescriptionDetail';
+import UserManagement from './pages/UserManagement';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
 import './i18n/config';
@@ -20,7 +20,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/" element={
             <ProtectedRoute>
               <Layout />
@@ -33,6 +32,7 @@ function App() {
             <Route path="patients/:patientId/prescriptions/new" element={<NewPrescription />} />
             <Route path="prescriptions" element={<PrescriptionsList />} />
             <Route path="prescriptions/:id" element={<PrescriptionDetail />} />
+            <Route path="users" element={<UserManagement />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>

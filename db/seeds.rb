@@ -1,15 +1,27 @@
-# Create test user
+# Create test users
 puts "="*50
-puts "👤 Creando usuario de prueba..."
+puts "👤 Creando usuarios de prueba..."
 puts "="*50
 
 User.destroy_all
+
+# Create admin user
+admin_user = User.create!(
+  email: "admin@optica.com",
+  password: "admin123",
+  password_confirmation: "admin123",
+  role: :admin
+)
+puts "✅ Admin creado: #{admin_user.email}"
+
+# Create sales user
 test_user = User.create!(
   email: "test@optica.com",
   password: "password123",
-  password_confirmation: "password123"
+  password_confirmation: "password123",
+  role: :sales
 )
-puts "✅ Usuario creado: #{test_user.email}"
+puts "✅ Usuario Sales creado: #{test_user.email}"
 
 # Crear pacientes de ejemplo
 puts "="*50
@@ -274,7 +286,7 @@ created_count = 0
 
 patients_data.each do |patient_attrs|
   begin
-    patient_attrs[:user] = test_user  # Associate with the test user
+    patient_attrs[:user] = admin_user  # Associate with the admin user
     patient = Patient.create!(patient_attrs)
     puts "✓ Paciente creado: #{patient.first_name} #{patient.last_name}"
     created_count += 1
@@ -302,9 +314,9 @@ PrescriptionEye.destroy_all
 Lens.destroy_all
 Frame.destroy_all
 
-# Get the test user and their patients
-test_user = User.first
-all_patients = test_user.patients
+# Get the admin user and their patients
+admin = User.find_by(role: :admin)
+all_patients = admin.patients
 
 # Define order number counter
 order_number_counter = 1
@@ -350,7 +362,7 @@ prescriptions_data.each do |rx_attrs|
   begin
     patient = rx_attrs.delete(:patient)
     prescription = Prescription.create!(
-      user: test_user,
+      user: admin,
       patient: patient,
       **rx_attrs
     )

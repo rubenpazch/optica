@@ -14,6 +14,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
+  // Debug: Log user role
+  React.useEffect(() => {
+    console.log('Sidebar - Current user:', user);
+    console.log('Sidebar - User role:', user?.role);
+    console.log('Sidebar - Is admin?', user?.role === 'admin' || user?.role === 'Admin');
+  }, [user]);
+
   const menuItems = [
     {
       name: t('sidebar.dashboard'),
@@ -42,6 +49,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         }
       ]
     },
+    ...(user?.role === 'admin' ? [{
+      name: t('sidebar.userManagement') || 'User Management',
+      path: '/users',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.856-1.3M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.856-1.3M7 20v-2c0-.656.126-1.283.356-1.857M16 16a5 5 0 11-10 0 5 5 0 0110 0z" />
+        </svg>
+      )
+    }] : []),
     {
       name: t('sidebar.appointments'),
       path: '/appointments',

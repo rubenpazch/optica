@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -120,15 +120,6 @@ const Login: React.FC = () => {
                   t('auth.signIn')
                 )}
               </button>
-            </div>
-            
-            <div className="text-center">
-              <Link 
-                to="/register" 
-                className="font-medium text-blue-600 hover:text-blue-500 transition duration-150"
-              >
-                {t('auth.dontHaveAccount')} <span className="font-semibold">{t('auth.register')}</span>
-              </Link>
             </div>
           </form>
         </div>
