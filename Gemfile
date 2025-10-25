@@ -29,6 +29,9 @@ gem "devise-jwt"
 # CORS for API requests from React frontend
 gem "rack-cors"
 
+# Rate limiting to prevent excessive API usage and DDoS attacks
+gem "rack-attack"
+
 # Pagination
 gem "kaminari"
 

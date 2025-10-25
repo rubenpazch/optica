@@ -6,6 +6,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Require custom middleware
+require_relative "../lib/middleware/security_headers_middleware"
+
 module Optica
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -15,6 +18,12 @@ module Optica
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+
+    # Add Rack::Attack middleware for rate limiting and DDoS protection
+    config.middleware.use Rack::Attack
+
+    # Add custom security headers middleware
+    config.middleware.use SecurityHeadersMiddleware
 
     # Configuration for the application, engines, and railties goes here.
     #
